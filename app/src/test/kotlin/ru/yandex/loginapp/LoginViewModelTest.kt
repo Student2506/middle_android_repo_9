@@ -16,7 +16,7 @@ import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LoginViewModelTest {
-    private var loginViewModel: LoginViewModel? = null
+    private lateinit var loginViewModel: LoginViewModel
     private val testDispatcher = StandardTestDispatcher()
 
 
@@ -29,7 +29,6 @@ class LoginViewModelTest {
     @After
     fun tearDown() {
         Dispatchers.resetMain()
-        loginViewModel = null
     }
 
     @Test
@@ -37,8 +36,9 @@ class LoginViewModelTest {
         val testEmail = ""
         val testPassword = ""
         val expected = LoginScreenState.EmptyFieldsError
-        loginViewModel?.login(testEmail, testPassword)
-        val actual = loginViewModel?.state?.value
+        loginViewModel.login(testEmail, testPassword)
+        advanceUntilIdle()
+        val actual = loginViewModel.state.value
         assertEquals(expected, actual)
     }
 
@@ -47,8 +47,9 @@ class LoginViewModelTest {
         val testEmail = "qwertyu"
         val testPassword = "qwerty"
         val expected = LoginScreenState.EmailValidationError
-        loginViewModel?.login(testEmail, testPassword)
-        val actual = loginViewModel?.state?.value
+        loginViewModel.login(testEmail, testPassword)
+        advanceUntilIdle()
+        val actual = loginViewModel.state.value
         assertEquals(expected, actual)
     }
 
@@ -57,9 +58,9 @@ class LoginViewModelTest {
         val testEmail = "none@none.no"
         val testPassword = "qwerty"
         val expected = LoginScreenState.Loading
-        loginViewModel?.login(testEmail, testPassword)
-        advanceTimeBy(2.seconds)
-        val actual = loginViewModel?.state?.value
+        loginViewModel.login(testEmail, testPassword)
+        advanceTimeBy(1.seconds)
+        val actual = loginViewModel.state.value
         assertEquals(expected, actual)
     }
 
@@ -68,13 +69,13 @@ class LoginViewModelTest {
         val testEmail = "none@none.no"
         val testPassword = "qwerty"
         val expected = LoginScreenState.Loading
-        loginViewModel?.login(testEmail, testPassword)
-        advanceTimeBy(2.seconds)
-        val actual = loginViewModel?.state?.value
+        loginViewModel.login(testEmail, testPassword)
+        advanceTimeBy(1.seconds)
+        val actual = loginViewModel.state.value
         assertEquals(expected, actual)
         advanceUntilIdle()
         val expectedSuccess = LoginScreenState.Success
-        val actualSuccess = loginViewModel?.state?.value
+        val actualSuccess = loginViewModel.state.value
         assertEquals(expectedSuccess, actualSuccess)
 
     }
