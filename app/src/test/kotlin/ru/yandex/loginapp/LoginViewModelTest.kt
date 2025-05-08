@@ -3,6 +3,8 @@ package ru.yandex.loginapp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -56,7 +58,7 @@ class LoginViewModelTest {
         val testPassword = "qwerty"
         val expected = LoginScreenState.Loading
         loginViewModel?.login(testEmail, testPassword)
-        testScheduler.advanceTimeBy(2.seconds)
+        advanceTimeBy(2.seconds)
         val actual = loginViewModel?.state?.value
         assertEquals(expected, actual)
     }
@@ -67,10 +69,10 @@ class LoginViewModelTest {
         val testPassword = "qwerty"
         val expected = LoginScreenState.Loading
         loginViewModel?.login(testEmail, testPassword)
-        testScheduler.advanceTimeBy(2.seconds)
+        advanceTimeBy(2.seconds)
         val actual = loginViewModel?.state?.value
         assertEquals(expected, actual)
-        testScheduler.advanceUntilIdle()
+        advanceUntilIdle()
         val expectedSuccess = LoginScreenState.Success
         val actualSuccess = loginViewModel?.state?.value
         assertEquals(expectedSuccess, actualSuccess)
