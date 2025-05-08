@@ -1,0 +1,1 @@
+[![Android Unit Tests](https://github.com/Student2506/middle_android_repo_9/actions/workflows/unit-tests.yml/badge.svg?branch=cicd_branch)](https://github.com/Student2506/middle_android_repo_9/actions/workflows/unit-tests.yml)  
