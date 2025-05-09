@@ -12,7 +12,7 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LoginViewModelTest {
@@ -59,7 +59,7 @@ class LoginViewModelTest {
         val testPassword = "qwerty"
         val expected = LoginScreenState.Loading
         loginViewModel.login(testEmail, testPassword)
-        advanceTimeBy(1.seconds)
+        advanceTimeBy(1.milliseconds)
         val actual = loginViewModel.state.value
         assertEquals(expected, actual)
     }
@@ -70,7 +70,7 @@ class LoginViewModelTest {
         val testPassword = "qwerty"
         val expected = LoginScreenState.Loading
         loginViewModel.login(testEmail, testPassword)
-        advanceTimeBy(1.seconds)
+        advanceTimeBy(1.milliseconds)
         val actual = loginViewModel.state.value
         assertEquals(expected, actual)
         advanceUntilIdle()
